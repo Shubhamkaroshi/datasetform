@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Submission</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='datasetForm.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin-top: 150px;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+        .options-container {
+            flex: 1;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
+        }
+
+        .instruction {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fffff0;
+            color: blue;
+            border-radius: 4px;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .options button {
+            margin: 10px;
+            width: 45%;
+            height: 40px;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .options button:hover {
+            background-color: #218838;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Submit News</h1>
+            <form id="newsForm" method="post" name="google-sheet">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="Title" required>
+                <label for="text">Text:</label>
+                <textarea id="text" name="Text" required></textarea>
+                <label for="label">Label:</label>
+                <select name="Label" id="label">
+                    <option value="REAL">REAL</option>
+                    <option value="FAKE">FAKE</option>
+                </select>
+                <input type="hidden" id="scriptURL" name="scriptURL">
+            </form>
+        </div>
+        <div class="options-container">
+            <div class="instruction">
+                <p>Select in which dataset you want to add news</p>
+            </div>
+            <div class="options">
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycbyMP-GOuhhwqKpLtUC2cT_-QSbWSk91RzOv79MGX0-rhb0AxDmjpWxAdz2_6wuHzlqTfQ/exec')">Sport</button>
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycbxiSgpeE3UjSMl8lrI6_fnd_97ec-OhhM9cIUCmiQvNbmCIWq2UkX3zGZ8pAMphDTCZMg/exec')">Technology</button>
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycbwK-7eoABTK7aNyJzVTt0AjOvFt6mNJ1q4Lp2eZDNX9WKV1WnSetWTSL7gce-y47-E06Q/exec')">Education</button>
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycby-eS2wTMTUYonxj9hSQ3Vod3RnqR7sZS3wcE_D0CEZ2g3nsbBiChjqb1CFKNcUPKZ3lA/exec')">Politics</button>
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycbyvzHJeMMCwcXh8jLGHagsnX0XfOk3s6l7cjDlZsYP1U0qFdye4NE6Lmq6_FFsMlRtbcA/exec')">Crime</button>
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycbw9V_v67sC6PNJruq400oilU00RG7_T3v4VX7u_UpDcVfTmiPuNlnRKO6zYAViFuCiUkg/exec')">Environment</button>
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycbwqQFSIWMH-CrMf88BNpNUjub6zlF_nrbDPudL5hXzshOHNNzS1lWJHtfsOfEnssXWW1g/exec')">Entertainment</button>
+                <button type="button" onclick="submitForm('https://script.google.com/macros/s/AKfycbwclxZ-l4pNFD52FGgoMhv1MffCULMyUNEQVJ3gXiQkZcAVVYkdeWYk-wJioOWGEL0uSw/exec')">Economy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitForm(scriptURL) {
+            const form = document.getElementById('newsForm');
+            const hiddenInput = document.getElementById('scriptURL');
+            hiddenInput.value = scriptURL;
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => alert("Thanks for your input"))
+                .catch(error => console.error('Error!', error.message));
+        }
+    </script>
+
+</body>
+</html>
